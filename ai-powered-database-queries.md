@@ -35,45 +35,6 @@ In order for OpenAI to understand the context of our question, we need to provid
 #### **`db.ts`**
 
 ```ts
-import { Database } from "sqlite3";
-
-const client = new Database("./data/baby_names.db");
-
-// Queries the database
-const query = <T>(sql: string): Promise<T[]> => {
-  return new Promise((resolve, reject) => {
-    client.all(sql, (err, rows: T[]) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
-      }
-    });
-  });
-};
-
-// Returns the schema of the SQLite database as a string
-const getSchema = async (): Promise<string> => {
-  const result = await query<{
-    sql: string;
-  }>("SELECT sql FROM sqlite_schema;");
-  return result.map((row) => row.sql).join("\n");
-};
-
-// Closes the connection to the database
-const close = () => {
-  client.close();
-};
-
-export const db = {
-  client,
-  getSchema,
-  query,
-  close,
-};
-```
-
-```ts
 console.log(await getSchema());
 // CREATE TABLE baby_names (
 //     Name TEXT,
@@ -90,13 +51,6 @@ Next, our users need to be able to ask the AI questions. I created this `getUser
 #### **`get-user-input.ts`**
 
 ```ts
-import * as readline from "readline";
-
-const cli = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
 export const getUserInput = (
   callback: (userInput: string) => Promise<void>
 ) => {
@@ -207,6 +161,5 @@ What do you want to ask your data?
 ```
 
 Want to run the application yourself? The repo can be found here: https://github.com/noahskorner/ai-powered-database-queries.git
-
 
 **Disclaimer: Obviously, this is not production level code. We wouldn't want to run unfiltered queries against a live production database, but this is a cool example of how AI can be used to automate our daily tasks.**
