@@ -17,3 +17,11 @@ npm install
 ```sh
 npm run start
 ```
+
+## Using your own database
+Want to use your own SQLite database? Just replace the `./data/baby_names.db` path with the path to your database.
+
+#### **`db.ts`**
+```ts
+const client = new Database("./data/baby_names.db");
+```
