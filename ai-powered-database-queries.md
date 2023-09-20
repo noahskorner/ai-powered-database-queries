@@ -112,7 +112,7 @@ export const getUserInput = (
 
 ## Connecting to the OpenAI API
 
-Now we need to connect to the OpenAI API. I created a simple `openai.ts` file to handle this for us.
+Now we need to create a connection to the OpenAI API. The `openai` npm package makes this dead simple:
 
 #### **`openai.ts`**
 
